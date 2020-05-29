@@ -1,5 +1,6 @@
 import React, { memo, lazy, Suspense } from 'react'
 import { Form, Input, Col, Button, Row, InputNumber } from "antd";
+import { Skeleton } from 'antd'
 const WebSocket = lazy(() => import(/* webpackChunkName: 'websocket.chunk' */'../../components/WebSocket'))
 
 const formItemLayout = {
@@ -42,71 +43,68 @@ interface Props {
 const OrderFrom: React.FC<Props> = memo(({ buttonType, handleClick, imgSrc, onFinish, loading, stock }) => {
     const [form] = Form.useForm();
     return (
-        <div className='order-form'>
-        <Suspense fallback={<div />}>
-            <WebSocket />
-        </Suspense>
-        
+        <div className='order-form'>      
         { buttonType 
             ? (
-
-              <Form
-                {...formItemLayout}
-                form={form}
-                name="order"
-                onFinish={onFinish}
-                scrollToFirstError
-              >
-                <Form.Item
-                    name='amount'
-                    label="Amount"
-                    rules={[
-                        {
-                            required: true,
-                            message: "Please input the amount you want to buy!"
-                        },
-                        { 
-                            type: "number",
-                            min: 1, 
-                            max: stock 
-                        }
-                    ]}
-                >
-                    <InputNumber />
-                    </Form.Item>
-                <Form.Item
-                    label="verifyCode"
-                    name="verifyCode"
-                    extra="We must make sure that your are a human."
-                >
-                    <Row gutter={8}>
-                    <Col span={12}>
+                <Suspense fallback={<Skeleton active />}>
+                    <WebSocket />
+                    <Form
+                        {...formItemLayout}
+                        form={form}
+                        name="order"
+                        onFinish={onFinish}
+                        scrollToFirstError
+                    >
                         <Form.Item
-                            label="verifyCode"
-                            name="verifyCode"
-                            noStyle
+                            name='amount'
+                            label="Amount"
                             rules={[
                                 {
-                                required: true,
-                                message: "Please input the captcha Code you got!"
+                                    required: true,
+                                    message: "Please input the amount you want to buy!"
+                                },
+                                { 
+                                    type: "number",
+                                    min: 1, 
+                                    max: stock 
                                 }
                             ]}
                         >
-                        <Input />
+                            <InputNumber />
+                            </Form.Item>
+                        <Form.Item
+                            label="verifyCode"
+                            name="verifyCode"
+                            extra="We must make sure that your are a human."
+                        >
+                            <Row gutter={8}>
+                            <Col span={12}>
+                                <Form.Item
+                                    label="verifyCode"
+                                    name="verifyCode"
+                                    noStyle
+                                    rules={[
+                                        {
+                                        required: true,
+                                        message: "Please input the captcha Code you got!"
+                                        }
+                                    ]}
+                                >
+                                <Input />
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <img src={imgSrc} onClick={handleClick} alt='captcha' />
+                            </Col>
+                            </Row>
                         </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                        <img src={imgSrc} onClick={handleClick} alt='captcha' />
-                    </Col>
-                    </Row>
-                </Form.Item>
-                <Form.Item {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit" loading={loading}>
-                    Order
-                    </Button>
-                </Form.Item>
-              </Form>
-          
+                        <Form.Item {...tailFormItemLayout}>
+                            <Button type="primary" htmlType="submit" loading={loading}>
+                            Order
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Suspense>
           ) 
           : (
                 <Button type="primary" onClick={handleClick} className="buy-button">

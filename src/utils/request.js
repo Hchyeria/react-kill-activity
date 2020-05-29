@@ -2,7 +2,7 @@ import { error } from './Message'
 import appState from '../store/app-state'
 const axios = require('axios')
 
-export const BASE_URL = 'localhost:3000/api/'
+export const BASE_URL = 'kill.hchyeria.com'
 
 const request = async (
   {
@@ -24,14 +24,22 @@ const request = async (
             ...rest.headers
         }
     }
-    const result = await axios({
-        method,
-        url: `http://${BASE_URL}${url}`,
-        data,
-        ...rest,
-        headers
-        
-    })
+    let result
+    try {
+        result = await axios({
+            method,
+            url: `https://${BASE_URL}/api/${url}`,
+            data,
+            ...rest,
+            headers
+            
+        })
+    } catch (e) {
+        throw e
+        error(e.toString())
+        return
+    }
+    
     const body = result.data
 
     if (result.status !== 200 || !body.status) {

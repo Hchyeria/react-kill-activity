@@ -1,12 +1,10 @@
-import React, { memo, lazy, Suspense } from 'react'
+import React, { memo } from 'react'
 import { Tabs } from 'antd';
 import Login from '../../components/login/index'
 import Register from '../../components/Register/index'
 import './index.styl'
 
 import appState from '../../store/app-state'
-
-const WebSocket = lazy(() => import(/* webpackChunkName: 'websocket' */'../../components/WebSocket'))
 
 interface Props {
     history: {
@@ -23,9 +21,6 @@ const LoginRegister = memo((props: Props) => {
     }
     return (
         <>  
-            <Suspense fallback={<div />}>
-                <WebSocket />
-            </Suspense>
             <div className='login-from'>
                 <Tabs defaultActiveKey="1">
                     <TabPane tab="Login" key="1" >

@@ -174,7 +174,7 @@ const Detail: React.FC<any> = (props: any) => {
             </Descriptions.Item>
           </Descriptions>
           {
-            promoId
+            promoStatus === 2
             ? <Suspense fallback={<Skeleton active />}>
                 <OrderForm 
                   buttonType={buttonType}
@@ -186,7 +186,7 @@ const Detail: React.FC<any> = (props: any) => {
                 /> 
               </Suspense>
             
-            : <Suspense fallback={<Skeleton active />}>
+            : !promoId && <Suspense fallback={<Skeleton active />}>
                 <AddPromp itemId={itemId} /> 
               </Suspense>                        
             

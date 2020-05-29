@@ -49,7 +49,7 @@ const AppLayout: React.FC = observer(({ children }) => {
                                     </Link>    
                                     </Menu.Item>
                                 <Menu.Item key="2">
-                                    <Link to='sell'>
+                                    <Link to='/sell'>
                                         Sell
                                     </Link>
                                     </Menu.Item>
@@ -81,7 +81,7 @@ const AppLayout: React.FC = observer(({ children }) => {
                     </div>
                 </Container>
             </Header>
-            <Content style={{ minHeight: '620px'}}>
+            <Content style={{ minHeight: '700px'}}>
                 <Container>
                     { children }
                 </Container>

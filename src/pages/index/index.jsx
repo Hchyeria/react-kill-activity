@@ -18,6 +18,8 @@ const convertList = (list) => {
     return temp
 }
 
+const mapArray = Array.apply(null, Array(3))
+
 const App = observer((props) => {
     const [loading, setLoading] = useState(item.list.length === 0);
     const [list, setList] = useState(item.list)
@@ -42,27 +44,17 @@ const App = observer((props) => {
                 list && list.length > 0
                 ? (
                     <>
-                        <div className="card-one">
-                            {
-                                itemList[0].length && itemList[0].map(({ id, ...rest }) => (
-                                    <Card key={id} id={id} {...rest} />
-                                ))
-                            }
-                        </div>
-                        <div className="card-one">
-                            {
-                                itemList[1].length && itemList[1].map(({ id, ...rest }) => (
-                                    <Card key={id} id={id} {...rest} />
-                                ))
-                            }
-                        </div>
-                        <div className="card-one">
-                            {
-                                itemList[2].length && itemList[2].map(({ id, ...rest }) => (
-                                    <Card key={id} id={id} {...rest} />
-                                ))
-                            }
-                        </div>
+                    {
+                        mapArray.map((ele, index) => 
+                            <div className="card-one">
+                                {
+                                    itemList[index].length && itemList[index].map(({ id, ...rest }) => (
+                                        <Card key={id} id={id} {...rest} />
+                                    ))
+                                }
+                            </div>
+                        )
+                    }
                     </>
                 )
                 : <PageLoading />
